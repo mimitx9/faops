@@ -1,0 +1,69 @@
+name: faops
+description: FA Ops Flutter Application
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State Management
+  flutter_riverpod: ^2.5.1
+  riverpod_annotation: ^2.3.5
+
+  # Dependency Injection
+  get_it: ^7.7.0
+  injectable: ^2.4.1
+
+  # Networking
+  dio: ^5.4.0
+
+  # Code Generation
+  freezed_annotation: ^2.4.1
+  json_annotation: ^4.9.0
+  dartz: ^0.10.1
+
+  # Routing
+  go_router: ^13.0.0
+
+  # UI
+  flutter_chat_ui: ^1.6.15
+  cached_network_image: ^3.3.1
+  image_picker: ^1.0.7
+  flutter_screenutil: ^5.9.0
+  flutter_svg: ^2.0.9
+
+  # Storage
+  shared_preferences: ^2.2.2
+
+  # Utils
+  flutter_dotenv: ^5.1.0
+  logger: ^2.0.2+1
+  intl: ^0.19.0
+  package_info_plus: ^8.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.1
+
+  # Code Generation
+  build_runner: ^2.4.8
+  freezed: ^2.4.7
+  json_serializable: ^6.7.1
+  riverpod_generator: ^2.3.9
+  injectable_generator: ^2.6.0
+
+flutter:
+  uses-material-design: true
+
+  # Assets
+  assets:
+    - assets/images/
+    - assets/icons/
+    - assets/svg/
+    - .env
+

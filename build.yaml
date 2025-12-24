@@ -1,0 +1,16 @@
+targets:
+  $default:
+    builders:
+      freezed:
+        options:
+          union_value_case: pascal
+      json_serializable:
+        options:
+          explicit_to_json: true
+      injectable_generator:
+        options:
+          auto_register: true
+      riverpod_generator:
+        options:
+          # Riverpod generator options
+
