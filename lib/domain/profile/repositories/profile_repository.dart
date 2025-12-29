@@ -9,3 +9,5 @@ abstract class ProfileRepository {
   Future<Either<Failure, String>> uploadAvatar(String imagePath);
 }
 
+
+

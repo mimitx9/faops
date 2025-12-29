@@ -9,3 +9,5 @@ abstract class AuthRepository {
   Future<Either<Failure, bool>> isAuthenticated();
 }
 
+
+

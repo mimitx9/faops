@@ -11,3 +11,5 @@ abstract class ChatRepository {
   Future<Either<Failure, void>> deleteConversation(String conversationId);
 }
 
+
+

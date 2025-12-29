@@ -79,7 +79,11 @@ class FAButton extends StatelessWidget {
               ],
               Text(
                 textUppercase ? text.toUpperCase() : text,
-                style: textStyle,
+                style: textStyle.copyWith(
+                  color: type == FAButtonType.gradient 
+                      ? Colors.white 
+                      : fgColor,
+                ),
               ),
             ],
           );
@@ -117,10 +121,11 @@ class FAButton extends StatelessWidget {
         [AppColors.buttonGradientStart, AppColors.buttonGradientEnd];
     final gradientBegin = this.gradientBegin ?? Alignment.topCenter;
     final gradientEnd = this.gradientEnd ?? Alignment.bottomCenter;
+    final borderRadius = BorderRadius.circular(DesignSystem.radiusXL);
 
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(DesignSystem.radiusMD),
+        borderRadius: borderRadius,
         gradient: LinearGradient(
           begin: gradientBegin,
           end: gradientEnd,
@@ -129,9 +134,10 @@ class FAButton extends StatelessWidget {
       ),
       child: Material(
         color: Colors.transparent,
+        clipBehavior: Clip.antiAlias,
         child: InkWell(
           onTap: isLoading ? null : onPressed,
-          borderRadius: BorderRadius.circular(DesignSystem.radiusMD),
+          borderRadius: borderRadius,
           child: Container(
             padding: EdgeInsets.symmetric(
               horizontal: DesignSystem.spacingMD,
@@ -176,7 +182,7 @@ class FAButton extends StatelessWidget {
             vertical: DesignSystem.spacingSM,
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(DesignSystem.radiusMD),
+            borderRadius: BorderRadius.circular(DesignSystem.radiusXL),
           ),
           minimumSize: Size(isFullWidth ? double.infinity : 0, height),
         );
@@ -190,7 +196,7 @@ class FAButton extends StatelessWidget {
             vertical: DesignSystem.spacingSM,
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(DesignSystem.radiusMD),
+            borderRadius: BorderRadius.circular(DesignSystem.radiusXL),
           ),
           minimumSize: Size(isFullWidth ? double.infinity : 0, height),
         );
@@ -206,7 +212,7 @@ class FAButton extends StatelessWidget {
             vertical: DesignSystem.spacingSM,
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(DesignSystem.radiusMD),
+            borderRadius: BorderRadius.circular(DesignSystem.radiusXL),
           ),
           minimumSize: Size(isFullWidth ? double.infinity : 0, height),
         );
@@ -221,7 +227,7 @@ class FAButton extends StatelessWidget {
             vertical: DesignSystem.spacingSM,
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(DesignSystem.radiusMD),
+            borderRadius: BorderRadius.circular(DesignSystem.radiusXL),
           ),
           minimumSize: Size(isFullWidth ? double.infinity : 0, height),
         );
@@ -233,7 +239,7 @@ class FAButton extends StatelessWidget {
             vertical: DesignSystem.spacingSM,
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(DesignSystem.radiusMD),
+            borderRadius: BorderRadius.circular(DesignSystem.radiusXL),
           ),
           minimumSize: Size(isFullWidth ? double.infinity : 0, height),
         );

@@ -5,6 +5,10 @@ import '../pages/home_page.dart';
 import '../pages/profile_page.dart';
 import '../pages/upgrade_pro_page.dart';
 import '../pages/chat_page.dart';
+import '../pages/task_page.dart';
+import '../pages/role_page.dart';
+import '../pages/media_page.dart';
+import '../pages/content_page.dart';
 import '../providers/auth_provider.dart';
 
 final appRouterProvider = Provider<GoRouter>((ref) {
@@ -48,9 +52,34 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => const UpgradeProPage(),
       ),
       GoRoute(
+        path: '/business',
+        name: 'business',
+        builder: (context, state) => const UpgradeProPage(),
+      ),
+      GoRoute(
         path: '/chat',
         name: 'chat',
         builder: (context, state) => const ChatPage(),
+      ),
+      GoRoute(
+        path: '/task',
+        name: 'task',
+        builder: (context, state) => const TaskPage(),
+      ),
+      GoRoute(
+        path: '/role',
+        name: 'role',
+        builder: (context, state) => const RolePage(),
+      ),
+      GoRoute(
+        path: '/media',
+        name: 'media',
+        builder: (context, state) => const MediaPage(),
+      ),
+      GoRoute(
+        path: '/content',
+        name: 'content',
+        builder: (context, state) => const ContentPage(),
       ),
     ],
   );

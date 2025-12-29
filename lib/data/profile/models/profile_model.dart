@@ -50,6 +50,7 @@ extension ProfileModelX on ProfileModel {
       avatarUrl: avatar,
       isPro: isPro,
       isPremium: isPremium,
+      roles: roles,
       createdAt: null,
       updatedAt: null,
     );

@@ -5,14 +5,14 @@ import '../../core/theme/colors.dart';
 import '../../core/theme/typography.dart';
 import '../widgets/common/function_page_layout.dart';
 
-class ChatPage extends ConsumerStatefulWidget {
-  const ChatPage({super.key});
+class MediaPage extends ConsumerStatefulWidget {
+  const MediaPage({super.key});
 
   @override
-  ConsumerState<ChatPage> createState() => _ChatPageState();
+  ConsumerState<MediaPage> createState() => _MediaPageState();
 }
 
-class _ChatPageState extends ConsumerState<ChatPage> {
+class _MediaPageState extends ConsumerState<MediaPage> {
   final List<Map<String, dynamic>> _messages = [];
 
   void _handleSendMessage(String message) {
@@ -31,7 +31,6 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     return FunctionPageLayout(
       placeholderText: 'Viết yêu cầu',
       onSendMessage: _handleSendMessage,
-      showTabs: false,
       body: _buildBody(),
     );
   }
@@ -77,4 +76,5 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     );
   }
 }
+
 

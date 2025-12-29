@@ -22,7 +22,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   final _phoneController = TextEditingController();
   final _passwordController = TextEditingController();
   final _phoneFocusNode = FocusNode();
-  String? _loginError;
 
   @override
   void initState() {
@@ -43,9 +42,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
   Future<void> _handleLogin() async {
     if (_formKey.currentState!.validate()) {
-      setState(() {
-        _loginError = null; // Clear error khi bắt đầu login
-      });
       await ref.read(authNotifierProvider.notifier).login(
             _phoneController.text.trim(),
             _passwordController.text,
@@ -58,24 +54,25 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   Widget build(BuildContext context) {
     final authState = ref.watch(authNotifierProvider);
 
+    // Lấy error message từ state hiện tại
+    final loginError = authState.whenOrNull(
+      error: (error, stackTrace) {
+        // Lấy error message từ Failure
+        if (error is Failure) {
+          return error.message;
+        } else {
+          return error.toString();
+        }
+      },
+    );
+
+    // Lắng nghe thay đổi state để xử lý navigation
     ref.listen<AsyncValue<bool>>(authNotifierProvider, (previous, next) {
       next.whenOrNull(
         data: (isAuthenticated) {
           if (isAuthenticated) {
             // Navigation will be handled by router
           }
-        },
-        error: (error, stackTrace) {
-          // Lấy error message từ Failure
-          String errorMessage = 'Đã xảy ra lỗi. Vui lòng thử lại.';
-          if (error is Failure) {
-            errorMessage = error.message ?? errorMessage;
-          } else {
-            errorMessage = error.toString();
-          }
-          setState(() {
-            _loginError = errorMessage;
-          });
         },
       );
     });
@@ -138,7 +135,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     ),
                   ),
                   obscureText: true, // Let FATextField handle visibility toggle
-                  errorText: _loginError,
+                  errorText: loginError,
                   showBorder: true,
                   validator: (value) {
                     if (value == null || value.isEmpty) {

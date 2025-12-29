@@ -4,9 +4,12 @@ import '../../core/theme/design_system.dart';
 import '../../core/theme/colors.dart';
 import '../../core/theme/typography.dart';
 import '../../core/constants/app_strings.dart';
+import '../../core/constants/role_constants.dart';
 import '../widgets/common/fa_button.dart';
 import '../widgets/common/fa_bubble_chip.dart';
+import '../widgets/common/function_page_layout.dart';
 import '../providers/upgrade_provider.dart';
+import '../providers/profile_provider.dart';
 import '../../domain/upgrade/entities/upgrade_entity.dart';
 
 class UpgradeProPage extends ConsumerStatefulWidget {
@@ -27,10 +30,23 @@ class _UpgradeProPageState extends ConsumerState<UpgradeProPage> {
     await ref.read(purchaseNotifierProvider.notifier).purchase(request);
   }
 
+  void _handleSendMessage(String message) {
+    // TODO: Xử lý gửi message
+  }
+
+  void _handleHelpBubbleTap(String label, String inputText) {
+    // Tạo message dạng "Soi {{sđt}}" hoặc "Tạo QR {{sđt}}"...
+    final message = '$label $inputText';
+    _handleSendMessage(message);
+  }
+
   @override
   Widget build(BuildContext context) {
     final plansState = ref.watch(upgradePlansNotifierProvider);
     final purchaseState = ref.watch(purchaseNotifierProvider);
+    final profileState = ref.watch(profileNotifierProvider);
+    final profile = profileState.valueOrNull;
+    final hasAllRoles = profile?.roles.contains(RoleConstants.roleAll) ?? false;
 
     ref.listen<AsyncValue<void>>(purchaseNotifierProvider, (previous, next) {
       next.whenOrNull(
@@ -53,38 +69,36 @@ class _UpgradeProPageState extends ConsumerState<UpgradeProPage> {
       );
     });
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(AppStrings.upgradeToPro),
-      ),
+    return FunctionPageLayout(
+      placeholderText: 'Viết yêu cầu',
+      onSendMessage: _handleSendMessage,
+      showTabs: true,
+      showInputBox: true,
+      showSendButton: false,
+      tabLabels: ['Khác', 'Thủ công'],
+      enableClipboardPaste: true,
+      onHelpBubbleTap: _handleHelpBubbleTap,
+      helpBubbles: [
+        HelpBubble(
+          label: 'Tạo QR',
+        ),
+        HelpBubble(
+          label: 'Soi',
+        ),
+        HelpBubble(
+          label: 'Reset',
+        ),
+        HelpBubble(
+          label: 'Block',
+        ),
+      ],
       body: Column(
         children: [
-          Padding(
-            padding: EdgeInsets.all(DesignSystem.spacingLG),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                FABubbleChip(
-                  label: AppStrings.monthly,
-                  isSelected: !_isYearly,
-                  onTap: () => setState(() => _isYearly = false),
-                ),
-                SizedBox(width: DesignSystem.spacingMD),
-                FABubbleChip(
-                  label: AppStrings.yearly,
-                  isSelected: _isYearly,
-                  onTap: () => setState(() => _isYearly = true),
-                ),
-              ],
-            ),
-          ),
           Expanded(
             child: plansState.when(
               data: (plans) {
                 if (plans.isEmpty) {
-                  return Center(
-                    child: Text(AppStrings.noData),
-                  );
+                  return SizedBox.shrink();
                 }
                 return ListView.builder(
                   padding: EdgeInsets.all(DesignSystem.spacingMD),

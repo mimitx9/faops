@@ -38,7 +38,7 @@ class AuthNotifier extends _$AuthNotifier {
     result.fold(
       (failure) {
         state = AsyncValue.error(
-          Failure.unknown(message: failure.toString()),
+          failure,
           StackTrace.current,
         );
       },

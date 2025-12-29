@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../../core/theme/design_system.dart';
 import '../../core/theme/colors.dart';
 import '../../core/theme/typography.dart';
 import '../../core/constants/app_strings.dart';
+import '../../core/constants/role_constants.dart';
 import '../widgets/common/fa_button.dart';
 import '../widgets/common/fa_text_field.dart';
 import '../widgets/common/fa_avatar.dart';
+import '../widgets/common/bottom_navigator.dart';
 import '../providers/profile_provider.dart';
 import '../../domain/profile/entities/profile_entity.dart';
 
@@ -167,6 +170,16 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: profileState.when(
+        data: (profile) {
+          // Không truyền currentRoute để BottomNavigator tự lấy từ GoRouterState
+          return BottomNavigator(
+            hasAllRoles: profile?.roles.contains(RoleConstants.roleAll) ?? false,
+          );
+        },
+        loading: () => null,
+        error: (_, __) => null,
       ),
     );
   }

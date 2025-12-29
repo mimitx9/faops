@@ -36,6 +36,17 @@ class AuthRepositoryImpl implements AuthRepository {
 
       // Lấy profile sau khi login thành công
       final profileModel = await _profileDataSource.getProfile();
+      
+      // Kiểm tra quyền admin: phải có isAdmin = true và roles không rỗng
+      final hasValidRoles = profileModel.roles.isNotEmpty && 
+          profileModel.roles.any((role) => role.isNotEmpty);
+      
+      if (profileModel.isAdmin != true || !hasValidRoles) {
+        // Xóa token nếu không phải admin
+        await _prefs.remove('auth_token');
+        return const Left(Failure.forbidden(message: 'Bạn không có quyền'));
+      }
+      
       // Convert ProfileModel to UserEntity
       final isPro = profileModel.faQuizInfo?.plan == 'PRO' || 
                     profileModel.faQuizInfo?.plan == 'PREMIUM';

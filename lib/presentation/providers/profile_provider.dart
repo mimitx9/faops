@@ -23,8 +23,22 @@ class ProfileNotifier extends _$ProfileNotifier {
     _changePasswordUseCase = ref.read(changePasswordUseCaseProvider);
     _uploadAvatarUseCase = ref.read(uploadAvatarUseCaseProvider);
 
-    await loadProfile();
-    return null;
+    // Load profile và return kết quả
+    state = const AsyncValue.loading();
+    final result = await _getProfileUseCase!();
+    return result.fold(
+      (failure) {
+        state = AsyncValue.error(
+          Failure.unknown(message: failure.toString()),
+          StackTrace.current,
+        );
+        return null;
+      },
+      (profile) {
+        state = AsyncValue.data(profile);
+        return profile;
+      },
+    );
   }
 
   Future<void> loadProfile() async {

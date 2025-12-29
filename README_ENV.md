@@ -22,3 +22,5 @@ API_BASE_URL=https://api.facourse.com
 - Luôn sử dụng `.env.example` làm template cho các biến môi trường cần thiết
 - Không commit thông tin nhạy cảm vào repository
 
+
+

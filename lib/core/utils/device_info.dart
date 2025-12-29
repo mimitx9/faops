@@ -41,3 +41,5 @@ class DeviceInfo {
   static String get buildVersion => _buildVersion;
 }
 
+
+

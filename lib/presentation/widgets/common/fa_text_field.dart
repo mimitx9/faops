@@ -55,16 +55,29 @@ class FATextField extends StatefulWidget {
 
 class _FATextFieldState extends State<FATextField> {
   bool _obscureText = false;
+  Key? _fieldKey;
 
   @override
   void initState() {
     super.initState();
     _obscureText = widget.obscureText;
+    // Tạo key ổn định dựa trên controller để giữ text khi rebuild
+    _fieldKey = widget.controller != null 
+        ? ValueKey('text_field_${widget.controller.hashCode}')
+        : UniqueKey();
+  }
+
+  Key get _getFieldKey {
+    _fieldKey ??= widget.controller != null 
+        ? ValueKey('text_field_${widget.controller.hashCode}')
+        : UniqueKey();
+    return _fieldKey!;
   }
 
   @override
   Widget build(BuildContext context) {
     final textField = TextFormField(
+      key: _getFieldKey,
       controller: widget.controller,
       obscureText: widget.obscureText ? _obscureText : false,
       enabled: widget.enabled,
@@ -78,6 +91,7 @@ class _FATextFieldState extends State<FATextField> {
       focusNode: widget.focusNode,
       textInputAction: widget.textInputAction,
       autofocus: widget.autofocus,
+      autovalidateMode: AutovalidateMode.disabled,
       style: AppTypography.bodyLarge.copyWith(
         color: AppColors.textPrimary,
       ),
@@ -138,16 +152,18 @@ class _FATextFieldState extends State<FATextField> {
           SizedBox(height: DesignSystem.spacingXS),
         ],
         if (widget.showBorder)
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(DesignSystem.radiusMD),
-              border: Border.all(
+          Material(
+            color: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(DesignSystem.radiusXL),
+              side: BorderSide(
                 color: widget.errorText != null
                     ? AppColors.error
                     : AppColors.borderLight,
-                width: 1,
+                width: 1.5,
               ),
             ),
+            clipBehavior: Clip.antiAlias,
             child: textField,
           )
         else
