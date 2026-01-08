@@ -9,6 +9,7 @@ import '../pages/task_page.dart';
 import '../pages/role_page.dart';
 import '../pages/media_page.dart';
 import '../pages/content_page.dart';
+import '../pages/webview_page.dart';
 import '../providers/auth_provider.dart';
 
 final appRouterProvider = Provider<GoRouter>((ref) {
@@ -80,6 +81,19 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         path: '/content',
         name: 'content',
         builder: (context, state) => const ContentPage(),
+      ),
+      GoRoute(
+        path: '/webview',
+        name: 'webview',
+        builder: (context, state) {
+          final url = state.uri.queryParameters['url'] ?? 
+                     'https://fa.ap.ngrok.io/public/dashboard/bcccd372-81cc-4fef-9f2f-206db502bbd2';
+          final title = state.uri.queryParameters['title'];
+          return WebViewPage(
+            url: url,
+            title: title,
+          );
+        },
       ),
     ],
   );

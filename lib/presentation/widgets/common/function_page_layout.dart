@@ -12,6 +12,7 @@ import '../../../../core/theme/typography.dart';
 import '../../../../core/utils/asset_helper.dart';
 import '../../../../core/constants/role_constants.dart';
 import '../../providers/profile_provider.dart';
+import '../../pages/webview_page.dart';
 import 'bottom_navigator.dart';
 
 class HelpBubble {
@@ -37,6 +38,10 @@ class FunctionPageLayout extends ConsumerStatefulWidget {
   final bool enableClipboardPaste;
   final bool showSendButton;
   final Function(String label, String inputText)? onHelpBubbleTap;
+  final Function(HelpBubble)? onHelpBubbleTapDirect;
+  final Widget? customBottomWidget;
+  final Function(int)? onTabChanged;
+  final bool alwaysShowHelpBubbles;
 
   const FunctionPageLayout({
     super.key,
@@ -52,6 +57,10 @@ class FunctionPageLayout extends ConsumerStatefulWidget {
     this.enableClipboardPaste = false,
     this.showSendButton = true,
     this.onHelpBubbleTap,
+    this.onHelpBubbleTapDirect,
+    this.customBottomWidget,
+    this.onTabChanged,
+    this.alwaysShowHelpBubbles = false,
   });
 
   @override
@@ -63,6 +72,7 @@ class _FunctionPageLayoutState extends ConsumerState<FunctionPageLayout> {
   final ImagePicker _imagePicker = ImagePicker();
   int _selectedTabIndex = 0;
   String? _errorMessage;
+  bool _hasText = false;
 
   @override
   void initState() {
@@ -127,6 +137,9 @@ class _FunctionPageLayoutState extends ConsumerState<FunctionPageLayout> {
           RegExp(r'^\d+$').hasMatch(clipboardText)) {
         // Paste vào ô input
         _textController.text = clipboardText;
+        setState(() {
+          _hasText = true;
+        });
       }
     } catch (e) {
       // Xử lý lỗi nếu không thể đọc clipboard
@@ -153,8 +166,11 @@ class _FunctionPageLayoutState extends ConsumerState<FunctionPageLayout> {
             Expanded(
               child: widget.body,
             ),
-            // Input box bo tròn
-            if (widget.showInputBox) _buildInputBox(context),
+            // Custom bottom widget hoặc Input box bo tròn
+            if (widget.customBottomWidget != null)
+              widget.customBottomWidget!
+            else if (widget.showInputBox)
+              _buildInputBox(context),
           ],
         ),
       ),
@@ -283,7 +299,15 @@ class _FunctionPageLayoutState extends ConsumerState<FunctionPageLayout> {
           // Trend icon bên phải
           GestureDetector(
             onTap: () {
-              // Xử lý khi click vào trend icon
+              // Mở webview khi click vào trend icon
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const WebViewPage(
+                    url: 'https://fa.ap.ngrok.io/public/dashboard/bcccd372-81cc-4fef-9f2f-206db502bbd2',
+                    title: 'Dashboard',
+                  ),
+                ),
+              );
             },
             child: SvgPicture.asset(
               'assets/svg/trend.svg',
@@ -303,6 +327,10 @@ class _FunctionPageLayoutState extends ConsumerState<FunctionPageLayout> {
         setState(() {
           _selectedTabIndex = index;
         });
+        // Notify parent về tab change
+        if (widget.onTabChanged != null) {
+          widget.onTabChanged!(index);
+        }
         // Kiểm tra clipboard khi chuyển sang tab "Khác" (index 0)
         if (widget.enableClipboardPaste && index == 0) {
           _checkAndPasteClipboard();
@@ -336,11 +364,19 @@ class _FunctionPageLayoutState extends ConsumerState<FunctionPageLayout> {
 
 
   void _handleHelpBubbleTap(HelpBubble bubble) {
+    // Nếu có onHelpBubbleTapDirect, gọi trực tiếp không cần input text
+    if (widget.onHelpBubbleTapDirect != null) {
+      widget.onHelpBubbleTapDirect!(bubble);
+      return;
+    }
+
     final inputText = _textController.text.trim();
     
-    if (inputText.isEmpty) {
+    // Nếu alwaysShowHelpBubbles = true, không cần input text
+    if (!widget.alwaysShowHelpBubbles && inputText.isEmpty) {
       setState(() {
         _errorMessage = 'hãy nhập sđt khách hàng';
+        _hasText = false;
       });
       return;
     }
@@ -353,6 +389,9 @@ class _FunctionPageLayoutState extends ConsumerState<FunctionPageLayout> {
       widget.onHelpBubbleTap!(bubble.label, inputText);
       // Clear input sau khi gửi message
       _textController.clear();
+      setState(() {
+        _hasText = false;
+      });
     } else if (bubble.onTap != null) {
       bubble.onTap!();
     }
@@ -362,25 +401,38 @@ class _FunctionPageLayoutState extends ConsumerState<FunctionPageLayout> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        // Help bubbles
+        // Help bubbles - hiện khi có text hoặc alwaysShowHelpBubbles = true
         if (widget.helpBubbles != null && widget.helpBubbles!.isNotEmpty)
-          Container(
-            padding: EdgeInsets.only(
-              left: DesignSystem.spacingLG,
-              right: DesignSystem.spacingLG,
-              bottom: DesignSystem.spacingSM,
-            ),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: widget.helpBubbles!.map((bubble) {
-                  return Padding(
-                    padding: EdgeInsets.only(right: DesignSystem.spacingSM),
-                    child: _buildHelpBubble(bubble),
-                  );
-                }).toList(),
-              ),
-            ),
+          AnimatedContainer(
+            duration: Duration(milliseconds: 200),
+            height: (_hasText || widget.alwaysShowHelpBubbles) ? null : 0,
+            padding: (_hasText || widget.alwaysShowHelpBubbles)
+                ? EdgeInsets.only(
+                    left: DesignSystem.spacingLG,
+                    right: DesignSystem.spacingLG,
+                    bottom: DesignSystem.spacingLG,
+                    top: DesignSystem.spacingMD,
+                  )
+                : EdgeInsets.zero,
+            margin: (_hasText || widget.alwaysShowHelpBubbles)
+                ? EdgeInsets.only(
+                    top: DesignSystem.spacingLG,
+                    bottom: DesignSystem.spacingMD,
+                  )
+                : EdgeInsets.zero,
+            child: (_hasText || widget.alwaysShowHelpBubbles)
+                ? SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: widget.helpBubbles!.map((bubble) {
+                        return Padding(
+                          padding: EdgeInsets.only(right: DesignSystem.spacingSM),
+                          child: _buildHelpBubble(bubble),
+                        );
+                      }).toList(),
+                    ),
+                  )
+                : SizedBox.shrink(),
           ),
         // Input box
         Container(
@@ -394,7 +446,7 @@ class _FunctionPageLayoutState extends ConsumerState<FunctionPageLayout> {
               borderRadius: BorderRadius.circular(DesignSystem.radiusXL),
               border: Border.all(
                 color: Color(0xFFF5F5F5),
-                width: 1,
+                width: 2,
               ),
             ),
             child: Row(
@@ -418,9 +470,14 @@ class _FunctionPageLayoutState extends ConsumerState<FunctionPageLayout> {
                   child: TextField(
                     controller: _textController,
                     onChanged: (value) {
-                      if (_errorMessage != null && value.trim().isNotEmpty) {
+                      final hasText = value.trim().isNotEmpty;
+                      // Chỉ setState khi giá trị thực sự thay đổi để tránh mất focus
+                      if (_hasText != hasText || _errorMessage != null) {
                         setState(() {
-                          _errorMessage = null;
+                          _hasText = hasText;
+                          if (_errorMessage != null && hasText) {
+                            _errorMessage = null;
+                          }
                         });
                       }
                     },
@@ -496,7 +553,7 @@ class _FunctionPageLayoutState extends ConsumerState<FunctionPageLayout> {
         ),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(DesignSystem.radiusMD),
+          borderRadius: BorderRadius.circular(DesignSystem.radiusXL),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.1),

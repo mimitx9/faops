@@ -63,5 +63,12 @@ class AppColors {
 
   // Icon Colors
   static const Color iconSecondary = Color(0xFF555555); // For secondary icons
+
+  // Task / Calendar Colors
+  // Màu tím theo design task (C74EFF) và bản nhạt 10%
+  static const Color taskPrimary = Color(0xFFC74EFF);
+  static const Color taskPrimarySoft = Color(0x1AC74EFF); // 10% opacity
+  // Màu xám nhạt 10% của đen để thể hiện trạng thái "chưa có nhiệm vụ"
+  static const Color taskEmpty = Color(0x1A000000);
 }
 

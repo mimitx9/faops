@@ -15,7 +15,7 @@ class UpgradePlansNotifier extends _$UpgradePlansNotifier {
   @override
   Future<List<UpgradePlanEntity>> build() async {
     _getPlansUseCase = ref.read(getPlansUseCaseProvider);
-    await loadPlans();
+    // Không tự động gọi API khi khởi tạo
     return [];
   }
 

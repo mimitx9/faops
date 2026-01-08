@@ -30,5 +30,14 @@ class ApiEndpoints {
   static const String chatConversations = '/chat/conversations';
   static const String chatMarkRead = '/chat/mark-read';
   static const String chatDelete = '/chat/delete';
+
+  // Reset Password Endpoint
+  static const String resetPassword = '/faquiz/app/import/reset-pass';
+
+  // User Action Endpoint
+  static const String processUserAction = '/fai/v1/internal/process-user-action';
+
+  // Task Endpoints
+  static const String tasks = '/fai/faquiz/v1/tasks';
 }
 
