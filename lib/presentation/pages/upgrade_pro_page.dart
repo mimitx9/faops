@@ -558,7 +558,7 @@ class _UpgradeProPageState extends ConsumerState<UpgradeProPage> {
       if (_scrollController.hasClients) {
         _scrollController.animateTo(
           _scrollController.position.maxScrollExtent,
-          duration: Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 300),
           curve: Curves.easeOut,
         );
       }
@@ -931,19 +931,19 @@ class _UpgradeProPageState extends ConsumerState<UpgradeProPage> {
         });
       },
       helpBubbles: [
-        HelpBubble(
+        const HelpBubble(
           label: 'Tạo QR',
         ),
-        HelpBubble(
+        const HelpBubble(
           label: 'Soi',
         ),
-        HelpBubble(
+        const HelpBubble(
           label: 'Reset',
         ),
-        HelpBubble(
+        const HelpBubble(
           label: 'Disable',
         ),
-        HelpBubble(
+        const HelpBubble(
           label: 'Enable',
         ),
       ],
@@ -986,16 +986,24 @@ class _UpgradeProPageState extends ConsumerState<UpgradeProPage> {
 
   Widget _buildUpgradeForm() {
     return SingleChildScrollView(
-      padding: EdgeInsets.all(DesignSystem.spacingLG),
       child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // Dòng 1: Input số điện thoại
-            _buildPhoneInput(),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: DesignSystem.spacingLG),
+              child: Column(
+                children: [
+                  _buildPhoneInput(),
+                ],
+              ),
+            ),
             SizedBox(height: DesignSystem.spacingMD),
             // Dòng 2: Thời gian và Key
-            Row(
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: DesignSystem.spacingLG),
+              child: Row(
               children: [
                 Expanded(
                   child: _buildTimeInput(),
@@ -1006,18 +1014,30 @@ class _UpgradeProPageState extends ConsumerState<UpgradeProPage> {
                 ),
               ],
             ),
+            ),
+            
             SizedBox(height: DesignSystem.spacingMD),
             // Dòng 3: Số tiền
-            _buildPriceInput(),
-            SizedBox(height: DesignSystem.spacingMD),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: DesignSystem.spacingLG),
+              child: Column(
+                children: [
+                  _buildPriceInput(),
+                ],
+              ),
+            ),
+            SizedBox(height: DesignSystem.spacingLG),
             // Dòng 4: App selection (Quiz, Streak, Class, Hack)
             _buildAppSelection(),
-            SizedBox(height: DesignSystem.spacingMD),
+            SizedBox(height: DesignSystem.spacingLG),
             // Dòng 5: Duration selection (1 tháng, 3 tháng, 12 tháng, vĩnh viễn)
             _buildDurationSelection(),
-            SizedBox(height: DesignSystem.spacingMD),
+            SizedBox(height: DesignSystem.spacingXL),
             // Dòng 6: Plan textbox
-            _buildPlanInput(),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: DesignSystem.spacingLG),
+              child: _buildPlanInput(),
+            ),
             SizedBox(height: DesignSystem.spacingMD),
             // Dòng 7: Options (Trả góp, Lớp Streak, VSTEP)
             _buildOptionsSelection(),
@@ -1030,7 +1050,7 @@ class _UpgradeProPageState extends ConsumerState<UpgradeProPage> {
     return Container(
       decoration: BoxDecoration(
         color: AppColors.surface,
-        borderRadius: BorderRadius.circular(DesignSystem.radiusXL),
+        borderRadius: BorderRadius.circular(DesignSystem.radiusFull),
         border: Border.all(
           color: Color(0xFFF5F5F5),
           width: 2,
@@ -1038,20 +1058,21 @@ class _UpgradeProPageState extends ConsumerState<UpgradeProPage> {
       ),
       child: Row(
         children: [
-          SizedBox(width: DesignSystem.spacingMD),
+          SizedBox(width: DesignSystem.spacingLG),
           SvgPicture.asset(
             'assets/svg/usericon.svg',
-            width: 20,
-            height: 20,
+            width: 18,
+            height: 18,
+            color: Colors.black12,
           ),
-          SizedBox(width: DesignSystem.spacingSM),
+          SizedBox(width: DesignSystem.spacingMD),
           Expanded(
             child: TextField(
               controller: _phoneController,
               keyboardType: TextInputType.phone,
               decoration: InputDecoration(
-                hintText: 'Nhập số điện thoại',
-                hintStyle: AppTypography.bodyMedium.copyWith(
+                hintText: 'SĐT',
+                hintStyle: AppTypography.bodyLarge.copyWith(
                   color: AppColors.textHint,
                 ),
                 border: InputBorder.none,
@@ -1061,7 +1082,7 @@ class _UpgradeProPageState extends ConsumerState<UpgradeProPage> {
                   vertical: DesignSystem.spacingMD,
                 ),
               ),
-              style: AppTypography.bodyMedium,
+              style: AppTypography.bodyLarge,
             ),
           ),
           SizedBox(width: DesignSystem.spacingMD),
@@ -1074,7 +1095,7 @@ class _UpgradeProPageState extends ConsumerState<UpgradeProPage> {
     return Container(
       decoration: BoxDecoration(
         color: AppColors.surface,
-        borderRadius: BorderRadius.circular(DesignSystem.radiusXL),
+        borderRadius: BorderRadius.circular(DesignSystem.radiusFull),
         border: Border.all(
           color: Color(0xFFF5F5F5),
           width: 2,
@@ -1082,20 +1103,21 @@ class _UpgradeProPageState extends ConsumerState<UpgradeProPage> {
       ),
       child: Row(
         children: [
-          SizedBox(width: DesignSystem.spacingMD),
+          SizedBox(width: DesignSystem.spacingLG),
           SvgPicture.asset(
             'assets/svg/hsd.svg',
             width: 18,
             height: 18,
+            color: Colors.black38,
           ),
-          SizedBox(width: DesignSystem.spacingSM),
+          SizedBox(width: DesignSystem.spacingMD),
           Expanded(
             child: TextField(
               controller: _timeController,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 hintText: '30',
-                hintStyle: AppTypography.bodyMedium.copyWith(
+                hintStyle: AppTypography.bodyLarge.copyWith(
                   color: AppColors.textHint,
                 ),
                 border: InputBorder.none,
@@ -1105,7 +1127,7 @@ class _UpgradeProPageState extends ConsumerState<UpgradeProPage> {
                   vertical: DesignSystem.spacingMD,
                 ),
               ),
-              style: AppTypography.bodyMedium,
+              style: AppTypography.bodyLarge,
             ),
           ),
           SizedBox(width: DesignSystem.spacingMD),
@@ -1118,7 +1140,7 @@ class _UpgradeProPageState extends ConsumerState<UpgradeProPage> {
     return Container(
       decoration: BoxDecoration(
         color: AppColors.surface,
-        borderRadius: BorderRadius.circular(DesignSystem.radiusXL),
+        borderRadius: BorderRadius.circular(DesignSystem.radiusFull),
         border: Border.all(
           color: Color(0xFFF5F5F5),
           width: 2,
@@ -1126,20 +1148,21 @@ class _UpgradeProPageState extends ConsumerState<UpgradeProPage> {
       ),
       child: Row(
         children: [
-          SizedBox(width: DesignSystem.spacingMD),
+          SizedBox(width: DesignSystem.spacingLG),
           SvgPicture.asset(
             'assets/svg/key2.svg',
             width: 10,
             height: 21,
+            color: Colors.black26,
           ),
-          SizedBox(width: DesignSystem.spacingSM),
+          SizedBox(width: DesignSystem.spacingMD),
           Expanded(
             child: TextField(
               controller: _keyController,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 hintText: '0',
-                hintStyle: AppTypography.bodyMedium.copyWith(
+                hintStyle: AppTypography.bodyLarge.copyWith(
                   color: AppColors.textHint,
                 ),
                 border: InputBorder.none,
@@ -1149,7 +1172,7 @@ class _UpgradeProPageState extends ConsumerState<UpgradeProPage> {
                   vertical: DesignSystem.spacingMD,
                 ),
               ),
-              style: AppTypography.bodyMedium,
+              style: AppTypography.bodyLarge,
             ),
           ),
           SizedBox(width: DesignSystem.spacingMD),
@@ -1162,7 +1185,7 @@ class _UpgradeProPageState extends ConsumerState<UpgradeProPage> {
     return Container(
       decoration: BoxDecoration(
         color: AppColors.surface,
-        borderRadius: BorderRadius.circular(DesignSystem.radiusXL),
+        borderRadius: BorderRadius.circular(DesignSystem.radiusFull),
         border: Border.all(
           color: Color(0xFFF5F5F5),
           width: 2,
@@ -1170,13 +1193,14 @@ class _UpgradeProPageState extends ConsumerState<UpgradeProPage> {
       ),
       child: Row(
         children: [
-          SizedBox(width: DesignSystem.spacingMD),
+          SizedBox(width: DesignSystem.spacingLG),
           SvgPicture.asset(
             'assets/svg/money.svg',
-            width: 24,
-            height: 24,
+            width: 18,  
+            height: 18,
+            color: Colors.black12,
           ),
-          SizedBox(width: DesignSystem.spacingSM),
+          SizedBox(width: DesignSystem.spacingMD),
           Expanded(
             child: TextField(
               controller: _priceController,
@@ -1184,7 +1208,7 @@ class _UpgradeProPageState extends ConsumerState<UpgradeProPage> {
               onChanged: _formatPriceOnChange,
               decoration: InputDecoration(
                 hintText: '159.000',
-                hintStyle: AppTypography.bodyMedium.copyWith(
+                hintStyle: AppTypography.bodyLarge.copyWith(
                   color: AppColors.textHint,
                 ),
                 border: InputBorder.none,
@@ -1194,7 +1218,7 @@ class _UpgradeProPageState extends ConsumerState<UpgradeProPage> {
                   vertical: DesignSystem.spacingMD,
                 ),
               ),
-              style: AppTypography.bodyMedium,
+              style: AppTypography.bodyLarge,
             ),
           ),
           SizedBox(width: DesignSystem.spacingMD),
@@ -1222,7 +1246,7 @@ class _UpgradeProPageState extends ConsumerState<UpgradeProPage> {
           final isSelected = _selectedApps.contains(appKey);
           final color = app['color'] as Color;
           return Padding(
-            padding: EdgeInsets.only(right: DesignSystem.spacingSM),
+            padding: EdgeInsets.only(left: DesignSystem.spacingMD),
             child: GestureDetector(
               onTap: () {
                 final newSelectedApps = Set<String>.from(_selectedApps);
@@ -1266,12 +1290,8 @@ class _UpgradeProPageState extends ConsumerState<UpgradeProPage> {
                   vertical: DesignSystem.spacingSM,
                 ),
                 decoration: BoxDecoration(
-                  color: isSelected ? color : Colors.white,
-                  border: Border.all(
-                    color: color,
-                    width: 2,
-                  ),
-                  borderRadius: BorderRadius.circular(DesignSystem.radiusXL),
+                  color: isSelected ? color : color.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(DesignSystem.radiusFull),
                 ),
                 child: Center(
                   child: Text(
@@ -1305,7 +1325,7 @@ class _UpgradeProPageState extends ConsumerState<UpgradeProPage> {
           final redColor = Color(0xFFFF3B30); // Màu đỏ
           
           return Padding(
-            padding: EdgeInsets.only(right: DesignSystem.spacingSM),
+            padding: EdgeInsets.only(left: DesignSystem.spacingMD),
             child: GestureDetector(
               onTap: () {
                 final newDuration = isSelected ? null : duration['key'] as String;
@@ -1348,7 +1368,7 @@ class _UpgradeProPageState extends ConsumerState<UpgradeProPage> {
                       color: isRed 
                           ? redColor
                           : Colors.black,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w400,
                     ),
                   ),
                 ),
@@ -1365,7 +1385,7 @@ class _UpgradeProPageState extends ConsumerState<UpgradeProPage> {
     return Container(
       decoration: BoxDecoration(
         color: AppColors.surface,
-        borderRadius: BorderRadius.circular(DesignSystem.radiusXL),
+        borderRadius: BorderRadius.circular(DesignSystem.radiusFull),
         border: Border.all(
           color: Color(0xFFF5F5F5),
           width: 2,
@@ -1373,19 +1393,20 @@ class _UpgradeProPageState extends ConsumerState<UpgradeProPage> {
       ),
       child: Row(
         children: [
-          SizedBox(width: DesignSystem.spacingMD),
+          SizedBox(width: DesignSystem.spacingLG),
           SvgPicture.asset(
             'assets/svg/content.svg',
             width: 20,
             height: 20,
+            color: Colors.black12,
           ),
-          SizedBox(width: DesignSystem.spacingSM),
+          SizedBox(width: DesignSystem.spacingMD),
           Expanded(
             child: TextField(
               controller: _planController,
               decoration: InputDecoration(
                 hintText: 'Quiz 1 tháng',
-                hintStyle: AppTypography.bodyMedium.copyWith(
+                hintStyle: AppTypography.bodyLarge.copyWith(
                   color: AppColors.textHint,
                 ),
                 border: InputBorder.none,
@@ -1395,7 +1416,7 @@ class _UpgradeProPageState extends ConsumerState<UpgradeProPage> {
                   vertical: DesignSystem.spacingMD,
                 ),
               ),
-              style: AppTypography.bodyMedium,
+              style: AppTypography.bodyLarge,
             ),
           ),
           SizedBox(width: DesignSystem.spacingMD),
@@ -1537,11 +1558,11 @@ class _UpgradeProPageState extends ConsumerState<UpgradeProPage> {
             _buildOptionButton('Trả góp', _isInstallment, (value) {
               _handleOptionToggle('Trả góp', value);
             }),
-            SizedBox(width: DesignSystem.spacingSM),
+            SizedBox(width: DesignSystem.spacingMD),
             _buildOptionButton('Lớp Streak', _isStreakClass, (value) {
               _handleOptionToggle('Lớp Streak', value);
             }),
-            SizedBox(width: DesignSystem.spacingSM),
+            SizedBox(width: DesignSystem.spacingMD),
             _buildOptionButton('VSTEP', _isVstep, (value) {
               _handleOptionToggle('VSTEP', value);
             }),
@@ -1556,8 +1577,8 @@ class _UpgradeProPageState extends ConsumerState<UpgradeProPage> {
       onTap: () => onTap(!isSelected),
       child: Container(
         padding: EdgeInsets.symmetric(
-          horizontal: DesignSystem.spacingSM,
-          vertical: DesignSystem.spacingXS,
+          horizontal: DesignSystem.spacingMD,
+          vertical: DesignSystem.spacingSM,
         ),
         decoration: BoxDecoration(
           color: isSelected 
@@ -1567,11 +1588,11 @@ class _UpgradeProPageState extends ConsumerState<UpgradeProPage> {
             color: Color(0x0D000000), // 5% opacity black
             width: 2,
           ),
-          borderRadius: BorderRadius.circular(DesignSystem.radiusXL),
+          borderRadius: BorderRadius.circular(DesignSystem.radiusFull),
         ),
         child: Text(
           label,
-          style: AppTypography.bodySmall.copyWith(
+          style: AppTypography.bodyMedium.copyWith(
             color: isSelected ? Colors.white : Colors.black,
           ),
         ),
@@ -1590,22 +1611,24 @@ class _UpgradeProPageState extends ConsumerState<UpgradeProPage> {
       ),
       child: Container(
         width: double.infinity,
-        height: DesignSystem.buttonHeightMD,
+        height: 60,
         decoration: BoxDecoration(
-          color: Color(0xFFE05B00),
-          borderRadius: BorderRadius.circular(DesignSystem.radiusXL),
+          color: Colors.black,
+          borderRadius: BorderRadius.circular(DesignSystem.radiusFull),
         ),
         child: Material(
           color: Colors.transparent,
           child: InkWell(
             onTap: _handleUpgrade,
-            borderRadius: BorderRadius.circular(DesignSystem.radiusXL),
+            borderRadius: BorderRadius.circular(DesignSystem.radiusFull),
             child: Center(
               child: Text(
                 'NÂNG CẤP',
-                style: AppTypography.bodyMedium.copyWith(
+                style: AppTypography.button.copyWith(
                   color: Colors.white,
+                  fontSize: 18,
                   fontWeight: FontWeight.w600,
+                  letterSpacing: 1,
                 ),
               ),
             ),
@@ -1918,7 +1941,7 @@ class _SoiInfoWidgetState extends State<SoiInfoWidget> {
           color: Color(0xFFF5F5F5),
           width: 2,
         ),
-        borderRadius: BorderRadius.circular(DesignSystem.radiusLG),
+        borderRadius: BorderRadius.circular(DesignSystem.radiusFull),
       ),
       child: child,
     );
@@ -2190,7 +2213,7 @@ class _SoiInfoWidgetState extends State<SoiInfoWidget> {
     // Chỉ hiển thị block nếu có ít nhất 1 trong các phần
     final hasContent = paidApps.isNotEmpty || 
                       unpaidApps.isNotEmpty || 
-                      (totalKeys != null && totalKeys! > 0) ||
+                      (totalKeys != null && totalKeys > 0) ||
                       (widget.devices != null && widget.devices!.isNotEmpty);
     
     if (!hasContent) return SizedBox.shrink();
@@ -2214,7 +2237,7 @@ class _SoiInfoWidgetState extends State<SoiInfoWidget> {
               }).toList(),
             ),
           // Dòng 2: Ứng dụng chưa thanh toán + Key
-          if (unpaidApps.isNotEmpty || (totalKeys != null && totalKeys! > 0)) ...[
+          if (unpaidApps.isNotEmpty || (totalKeys != null && totalKeys > 0)) ...[
             if (paidApps.isNotEmpty) SizedBox(height: DesignSystem.spacingSM),
             Wrap(
               spacing: DesignSystem.spacingSM,
@@ -2227,14 +2250,14 @@ class _SoiInfoWidgetState extends State<SoiInfoWidget> {
                     isPaid: false,
                   );
                 }).toList(),
-                if (totalKeys != null && totalKeys! > 0)
-                  _buildKeyChip(totalKeys!),
+                if (totalKeys != null && totalKeys > 0)
+                  _buildKeyChip(totalKeys),
               ],
             ),
           ],
           // Dòng 3: Danh sách thiết bị
           if (widget.devices != null && widget.devices!.isNotEmpty) ...[
-            if (paidApps.isNotEmpty || unpaidApps.isNotEmpty || (totalKeys != null && totalKeys! > 0))
+            if (paidApps.isNotEmpty || unpaidApps.isNotEmpty || (totalKeys != null && totalKeys > 0))
               SizedBox(height: DesignSystem.spacingSM),
             Wrap(
               spacing: DesignSystem.spacingSM,
@@ -2425,7 +2448,7 @@ class _LoadingMessageWidgetState extends State<_LoadingMessageWidget> {
   }
 
   void _startAnimation() {
-    Future.delayed(Duration(milliseconds: 200), () {
+    Future.delayed(const Duration(milliseconds: 200), () {
       if (mounted) {
         setState(() {
           _dotCount = (_dotCount % 3) + 1;

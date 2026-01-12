@@ -57,7 +57,7 @@ class _TaskPageState extends ConsumerState<TaskPage> {
       if (_scrollController.hasClients) {
         _scrollController.animateTo(
           _scrollController.position.maxScrollExtent,
-          duration: Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 300),
           curve: Curves.easeOut,
         );
       }
@@ -100,7 +100,7 @@ class _TaskPageState extends ConsumerState<TaskPage> {
       final now = DateTime.now();
       final todayStart = DateTime(now.year, now.month, now.day);
       final todayEnd = DateTime(now.year, now.month, now.day, 23, 59, 59);
-      final tomorrowStart = todayStart.add(Duration(days: 1));
+      final tomorrowStart = todayStart.add(const Duration(days: 1));
       final tomorrowEnd = DateTime(tomorrowStart.year, tomorrowStart.month, tomorrowStart.day, 23, 59, 59);
 
       if (query == 'Nhiệm vụ hôm nay') {
@@ -288,7 +288,7 @@ class _TaskPageState extends ConsumerState<TaskPage> {
       if (_scrollController.hasClients) {
         _scrollController.animateTo(
           _scrollController.position.maxScrollExtent,
-          duration: Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 300),
           curve: Curves.easeOut,
         );
       }
@@ -327,9 +327,9 @@ class _TaskPageState extends ConsumerState<TaskPage> {
       },
       helpBubbles: _selectedTabIndex == 0
           ? [
-              HelpBubble(label: 'Hôm nay'),
-              HelpBubble(label: 'Ngày mai'),
-              HelpBubble(label: 'Chưa xong'),
+              const HelpBubble(label: 'Hôm nay'),
+              const HelpBubble(label: 'Ngày mai'),
+              const HelpBubble(label: 'Chưa xong'),
             ]
           : null,
       body: _buildBody(),
@@ -559,8 +559,8 @@ class _TaskPageState extends ConsumerState<TaskPage> {
           ),
           const SizedBox(height: 8),
           Container(
-            width: 40,
-            height: 40,
+            width: 32,
+            height: 32,
             decoration: BoxDecoration(
               color: fillColor,
               borderRadius: BorderRadius.circular(20),
@@ -891,7 +891,7 @@ class _LoadingMessageWidgetState extends State<_LoadingMessageWidget> {
   }
 
   void _startAnimation() {
-    Future.delayed(Duration(milliseconds: 200), () {
+    Future.delayed(const Duration(milliseconds: 200), () {
       if (mounted) {
         setState(() {
           _dotCount = (_dotCount % 3) + 1;

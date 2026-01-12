@@ -10,6 +10,8 @@ class AssetHelper {
   static const String svgSuccess = 'assets/svg/success.svg';
 
   // Image Paths
+  static const String imageLogo = 'assets/svg/logo.png';
+  static const String imageLogoWhite = 'assets/svg/logo_white.png';
   static const String imagePlaceholder = 'assets/images/placeholder.png';
   static const String imageBackground = 'assets/images/background.png';
 

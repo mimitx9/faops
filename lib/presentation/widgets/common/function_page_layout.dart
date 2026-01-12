@@ -195,12 +195,12 @@ class _FunctionPageLayoutState extends ConsumerState<FunctionPageLayout> {
                   ? ClipOval(
                       child: CachedNetworkImage(
                         imageUrl: profile.avatarUrl!,
-                        width: 40,
-                        height: 40,
+                        width: 32,
+                        height: 32,
                         fit: BoxFit.cover,
                         placeholder: (context, url) => Container(
-                          width: 40,
-                          height: 40,
+                          width: 32,
+                          height: 32,
                           color: AppColors.background,
                           child: Center(
                             child: CircularProgressIndicator(
@@ -210,8 +210,8 @@ class _FunctionPageLayoutState extends ConsumerState<FunctionPageLayout> {
                         ),
                         errorWidget: (context, url, error) {
                           return Container(
-                            width: 40,
-                            height: 40,
+                            width: 32,
+                            height: 32,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: AppColors.border,
@@ -226,8 +226,8 @@ class _FunctionPageLayoutState extends ConsumerState<FunctionPageLayout> {
                       ),
                     )
                   : Container(
-                      width: 40,
-                      height: 40,
+                      width: 32,
+                      height: 32,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: AppColors.border,
@@ -240,8 +240,8 @@ class _FunctionPageLayoutState extends ConsumerState<FunctionPageLayout> {
                     ),
             ),
             loading: () => Container(
-              width: 40,
-              height: 40,
+              width: 32,
+              height: 32,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: AppColors.border,
@@ -253,8 +253,8 @@ class _FunctionPageLayoutState extends ConsumerState<FunctionPageLayout> {
               ),
             ),
             error: (_, __) => Container(
-              width: 40,
-              height: 40,
+              width: 32,
+              height: 32,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: AppColors.border,
@@ -404,20 +404,19 @@ class _FunctionPageLayoutState extends ConsumerState<FunctionPageLayout> {
         // Help bubbles - hiện khi có text hoặc alwaysShowHelpBubbles = true
         if (widget.helpBubbles != null && widget.helpBubbles!.isNotEmpty)
           AnimatedContainer(
-            duration: Duration(milliseconds: 200),
+            duration: const Duration(milliseconds: 200),
             height: (_hasText || widget.alwaysShowHelpBubbles) ? null : 0,
             padding: (_hasText || widget.alwaysShowHelpBubbles)
                 ? EdgeInsets.only(
                     left: DesignSystem.spacingLG,
                     right: DesignSystem.spacingLG,
-                    bottom: DesignSystem.spacingLG,
                     top: DesignSystem.spacingMD,
                   )
                 : EdgeInsets.zero,
             margin: (_hasText || widget.alwaysShowHelpBubbles)
                 ? EdgeInsets.only(
                     top: DesignSystem.spacingLG,
-                    bottom: DesignSystem.spacingMD,
+                    bottom: DesignSystem.spacingSM,
                   )
                 : EdgeInsets.zero,
             child: (_hasText || widget.alwaysShowHelpBubbles)
@@ -426,7 +425,7 @@ class _FunctionPageLayoutState extends ConsumerState<FunctionPageLayout> {
                     child: Row(
                       children: widget.helpBubbles!.map((bubble) {
                         return Padding(
-                          padding: EdgeInsets.only(right: DesignSystem.spacingSM),
+                          padding: EdgeInsets.only(right: DesignSystem.spacingMD),
                           child: _buildHelpBubble(bubble),
                         );
                       }).toList(),
@@ -443,7 +442,7 @@ class _FunctionPageLayoutState extends ConsumerState<FunctionPageLayout> {
           child: Container(
             decoration: BoxDecoration(
               color: AppColors.surface,
-              borderRadius: BorderRadius.circular(DesignSystem.radiusXL),
+              borderRadius: BorderRadius.circular(DesignSystem.radiusFull),
               border: Border.all(
                 color: Color(0xFFF5F5F5),
                 width: 2,
@@ -456,11 +455,11 @@ class _FunctionPageLayoutState extends ConsumerState<FunctionPageLayout> {
                 GestureDetector(
                   onTap: _pickImage,
                   child: Container(
-                    padding: EdgeInsets.all(DesignSystem.spacingSM),
+                    padding: EdgeInsets.all(DesignSystem.spacingXS),
                     child: SvgPicture.asset(
                       'assets/svg/upload.svg',
-                      width: 20,
-                      height: 20,
+                      width: 28,
+                      height: 28,
                     ),
                   ),
                 ),
@@ -483,7 +482,7 @@ class _FunctionPageLayoutState extends ConsumerState<FunctionPageLayout> {
                     },
                     decoration: InputDecoration(
                       hintText: widget.placeholderText ?? 'Viết yêu cầu',
-                      hintStyle: AppTypography.bodyMedium.copyWith(
+                      hintStyle: AppTypography.bodyLarge.copyWith(
                         color: AppColors.textHint,
                       ),
                       border: InputBorder.none,
@@ -496,7 +495,7 @@ class _FunctionPageLayoutState extends ConsumerState<FunctionPageLayout> {
                         vertical: DesignSystem.spacingMD,
                       ),
                     ),
-                    style: AppTypography.bodyMedium,
+                    style: AppTypography.bodyLarge,
                     maxLines: null,
                     textInputAction: TextInputAction.send,
                     onSubmitted: (_) => _handleSend(),
@@ -507,11 +506,10 @@ class _FunctionPageLayoutState extends ConsumerState<FunctionPageLayout> {
                   GestureDetector(
                     onTap: _handleSend,
                     child: Container(
-                      padding: EdgeInsets.all(DesignSystem.spacingMD),
+                      padding: EdgeInsets.symmetric(horizontal: DesignSystem.spacingLG, vertical: DesignSystem.spacingMD),
                       child: SvgPicture.asset(
                         'assets/svg/send.svg',
-                        width: 19,
-                        height: 17,
+                        width: 18,
                       ),
                     ),
                   )
@@ -553,11 +551,11 @@ class _FunctionPageLayoutState extends ConsumerState<FunctionPageLayout> {
         ),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(DesignSystem.radiusXL),
+          borderRadius: BorderRadius.circular(DesignSystem.radiusFull),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 4,
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 2,
               offset: Offset(0, 2),
             ),
           ],
@@ -566,6 +564,9 @@ class _FunctionPageLayoutState extends ConsumerState<FunctionPageLayout> {
           bubble.label,
           style: AppTypography.labelMedium.copyWith(
             color: AppColors.textPrimary,
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+            letterSpacing: 0.25,
           ),
         ),
       ),

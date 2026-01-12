@@ -85,8 +85,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
                         crossAxisCount: 2,
-                        crossAxisSpacing: DesignSystem.spacingMD,
-                        mainAxisSpacing: DesignSystem.spacingMD,
+                        crossAxisSpacing: DesignSystem.spacingSM,
+                        mainAxisSpacing: DesignSystem.spacingSM,
                         childAspectRatio: 0.85,
                         children: cards,
                       ),
@@ -100,7 +100,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                   right: 0,
                   child: Container(
                     padding: EdgeInsets.symmetric(
-                      horizontal: DesignSystem.spacingLG,
+                      horizontal: DesignSystem.spacingXL,
                       vertical: DesignSystem.spacingMD,
                     ),
                     child: Row(
@@ -113,12 +113,12 @@ class _HomePageState extends ConsumerState<HomePage> {
                               ? ClipOval(
                                   child: CachedNetworkImage(
                                     imageUrl: profile.avatarUrl!,
-                                    width: 40,
-                                    height: 40,
+                                    width: 32,
+                                    height: 32,
                                     fit: BoxFit.cover,
                                     placeholder: (context, url) => Container(
-                                      width: 40,
-                                      height: 40,
+                                      width: 32,
+                                      height: 32,
                                       color: AppColors.background,
                                       child: Center(
                                         child: CircularProgressIndicator(
@@ -129,8 +129,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                                     errorWidget: (context, url, error) {
                                       return SvgPicture.asset(
                                         AssetHelper.svgUser,
-                                        width: 40,
-                                        height: 40,
+                                        width: 32,
+                                        height: 32,
                                         colorFilter: hasAllRoles
                                             ? ColorFilter.mode(Colors.white, BlendMode.srcIn)
                                             : null,
@@ -140,21 +140,18 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 )
                               : SvgPicture.asset(
                                   AssetHelper.svgUser,
-                                  width: 40,
-                                  height: 40,
+                                  width: 32,
+                                  height: 32,
                                   colorFilter: hasAllRoles
                                       ? ColorFilter.mode(Colors.white, BlendMode.srcIn)
                                       : null,
                                 ),
                         ),
                         // Logo ở giữa
-                        SvgPicture.asset(
-                          AssetHelper.svgLogo,
+                        Image.asset(
+                          AssetHelper.imageLogoWhite,
                           width: 134,
                           height: 39,
-                          colorFilter: hasAllRoles
-                              ? ColorFilter.mode(Colors.white, BlendMode.srcIn)
-                              : null,
                         ),
                         // Action buttons ở góc trên bên phải
                         Row(
@@ -163,7 +160,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                             IconButton(
                               icon: Icon(
                                 Icons.logout,
-                                color: hasAllRoles ? Colors.white : null,
+                                color: hasAllRoles ? Colors.white38 : null,
                               ),
                               onPressed: () async {
                                 await ref.read(authNotifierProvider.notifier).logout();
@@ -229,8 +226,8 @@ class _HomePageState extends ConsumerState<HomePage> {
       }
 
       if (route != null) {
-        final routeToPush = route!;
-        Future.delayed(Duration(milliseconds: 300), () {
+        final routeToPush = route;
+        Future.delayed(const Duration(milliseconds: 300), () {
           if (mounted) {
             context.push(routeToPush);
           }
@@ -250,6 +247,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           RoleConstants.iconMoney,
           () => context.push(RoleConstants.routeBusiness),
           hasAllRoles,
+          iconColor: Color(0xFF85E14C), // Vàng cho Business
         ),
         _buildActionCard(
           context,
@@ -257,6 +255,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           RoleConstants.iconTask,
           () => context.push(RoleConstants.routeTask),
           hasAllRoles,
+          iconColor: Color(0xFFC74EFF), // Xanh dương cho Task
         ),
         _buildActionCard(
           context,
@@ -264,6 +263,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           RoleConstants.iconContent,
           () => context.push(RoleConstants.routeContent),
           hasAllRoles,
+          iconColor: Color(0xFFFF4A4A), // Tím cho Content
         ),
         _buildActionCard(
           context,
@@ -271,6 +271,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           RoleConstants.iconMedia,
           () => context.push(RoleConstants.routeMedia),
           hasAllRoles,
+          iconColor: Color(0xFFFFC11C), // Đỏ cho Media
         ),
         _buildActionCard(
           context,
@@ -278,6 +279,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           RoleConstants.iconUser,
           () => context.push(RoleConstants.routeRole),
           hasAllRoles,
+          iconColor: Color(0xFF4EE6FD), // Xanh lá cho Role
         ),
       ]);
     } else {
@@ -290,6 +292,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             RoleConstants.iconMoney,
             () => context.push(RoleConstants.routeBusiness),
             hasAllRoles,
+            iconColor: Color(0xFFFFD700), // Vàng cho Business
           ),
         );
       }
@@ -302,6 +305,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             RoleConstants.iconTask,
             () => context.push(RoleConstants.routeTask),
             hasAllRoles,
+            iconColor: Color(0xFF4A90E2), // Xanh dương cho Task
           ),
         );
       }
@@ -314,6 +318,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             RoleConstants.iconContent,
             () => context.push(RoleConstants.routeContent),
             hasAllRoles,
+            iconColor: Color(0xFF9B59B6), // Tím cho Content
           ),
         );
       }
@@ -326,6 +331,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             RoleConstants.iconMedia,
             () => context.push(RoleConstants.routeMedia),
             hasAllRoles,
+            iconColor: Color(0xFFE74C3C), // Đỏ cho Media
           ),
         );
       }
@@ -338,6 +344,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             RoleConstants.iconUser,
             () => context.push(RoleConstants.routeRole),
             hasAllRoles,
+            iconColor: Color(0xFF2ECC71), // Xanh lá cho Role
           ),
         );
       }
@@ -351,16 +358,19 @@ class _HomePageState extends ConsumerState<HomePage> {
     String title,
     String iconPath,
     VoidCallback onTap,
-    bool hasAllRoles,
-  ) {
+    bool hasAllRoles, {
+    Color? iconColor,
+  }) {
     return Card(
-      color: Color(0xFF222222),
+      elevation: 0,
+      color: Colors.white10,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(DesignSystem.radiusXL),
+        side: BorderSide.none,
+      ),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(DesignSystem.radiusLG),
-        child: Padding(
-          padding: EdgeInsets.all(DesignSystem.spacingMD),
-          child: Column(
+        child:  Column(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -369,15 +379,19 @@ class _HomePageState extends ConsumerState<HomePage> {
                   iconPath,
                   width: DesignSystem.iconSizeXL,
                   height: DesignSystem.iconSizeXL,
-                  colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                  colorFilter: ColorFilter.mode(
+                    iconColor ?? Colors.white,
+                    BlendMode.srcIn,
+                  ),
                 ),
               ),
-              SizedBox(height: DesignSystem.spacingSM),
+              SizedBox(height: DesignSystem.spacingLG),
               Flexible(
                 child: Text(
                   title,
-                  style: AppTypography.titleMedium.copyWith(
+                  style: AppTypography.titleSmall.copyWith(
                     color: Colors.white,
+                    letterSpacing: 1,
                   ),
                   textAlign: TextAlign.center,
                   maxLines: 2,
@@ -386,7 +400,6 @@ class _HomePageState extends ConsumerState<HomePage> {
               ),
             ],
           ),
-        ),
       ),
     );
   }

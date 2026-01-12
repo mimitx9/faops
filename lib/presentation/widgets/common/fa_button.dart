@@ -56,16 +56,13 @@ class FAButton extends StatelessWidget {
     final fgColor = foregroundColor ?? _getForegroundColor(context);
 
     Widget child = isLoading
-        ? SizedBox(
-            height: buttonHeight,
-            child: Center(
-              child: SizedBox(
-                width: DesignSystem.iconSizeSM,
-                height: DesignSystem.iconSizeSM,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                  valueColor: AlwaysStoppedAnimation<Color>(fgColor),
-                ),
+        ? Center(
+            child: SizedBox(
+              width: DesignSystem.iconSizeSM,
+              height: DesignSystem.iconSizeSM,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                valueColor: AlwaysStoppedAnimation<Color>(fgColor),
               ),
             ),
           )
@@ -121,7 +118,7 @@ class FAButton extends StatelessWidget {
         [AppColors.buttonGradientStart, AppColors.buttonGradientEnd];
     final gradientBegin = this.gradientBegin ?? Alignment.topCenter;
     final gradientEnd = this.gradientEnd ?? Alignment.bottomCenter;
-    final borderRadius = BorderRadius.circular(DesignSystem.radiusXL);
+    final borderRadius = BorderRadius.circular(DesignSystem.radiusFull);
 
     return Container(
       decoration: BoxDecoration(
@@ -141,7 +138,7 @@ class FAButton extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.symmetric(
               horizontal: DesignSystem.spacingMD,
-              vertical: DesignSystem.spacingMD,
+              vertical: DesignSystem.spacingLG,
             ),
             alignment: Alignment.center,
             constraints: BoxConstraints(
@@ -179,10 +176,10 @@ class FAButton extends StatelessWidget {
           elevation: DesignSystem.elevationNone,
           padding: EdgeInsets.symmetric(
             horizontal: DesignSystem.spacingMD,
-            vertical: DesignSystem.spacingSM,
+            vertical: DesignSystem.spacingLG,
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(DesignSystem.radiusXL),
+            borderRadius: BorderRadius.circular(DesignSystem.radiusFull),
           ),
           minimumSize: Size(isFullWidth ? double.infinity : 0, height),
         );
@@ -193,10 +190,10 @@ class FAButton extends StatelessWidget {
           elevation: DesignSystem.elevationNone,
           padding: EdgeInsets.symmetric(
             horizontal: DesignSystem.spacingMD,
-            vertical: DesignSystem.spacingSM,
+            vertical: DesignSystem.spacingLG,
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(DesignSystem.radiusXL),
+            borderRadius: BorderRadius.circular(DesignSystem.radiusFull),
           ),
           minimumSize: Size(isFullWidth ? double.infinity : 0, height),
         );
@@ -204,30 +201,30 @@ class FAButton extends StatelessWidget {
         return OutlinedButton.styleFrom(
           foregroundColor: fgColor,
           side: BorderSide(
-            color: AppColors.primary, // Use primary color for outline border
+            color: AppColors.buttonGradientEnd, // Use primary color for outline border
             width: DesignSystem.borderWidthThin,
           ),
           padding: EdgeInsets.symmetric(
             horizontal: DesignSystem.spacingMD,
-            vertical: DesignSystem.spacingSM,
+            vertical: DesignSystem.spacingLG,
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(DesignSystem.radiusXL),
+            borderRadius: BorderRadius.circular(DesignSystem.radiusFull),
           ),
           minimumSize: Size(isFullWidth ? double.infinity : 0, height),
         );
       case FAButtonType.gradient:
         // Gradient button is handled separately in _buildGradientButton
         return ElevatedButton.styleFrom(
-          backgroundColor: AppColors.primary,
+          backgroundColor: AppColors.buttonGradientEnd,
           foregroundColor: fgColor,
           elevation: DesignSystem.elevationNone,
           padding: EdgeInsets.symmetric(
             horizontal: DesignSystem.spacingMD,
-            vertical: DesignSystem.spacingSM,
+            vertical: DesignSystem.spacingLG,
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(DesignSystem.radiusXL),
+            borderRadius: BorderRadius.circular(DesignSystem.radiusFull),
           ),
           minimumSize: Size(isFullWidth ? double.infinity : 0, height),
         );
@@ -236,10 +233,10 @@ class FAButton extends StatelessWidget {
           foregroundColor: fgColor,
           padding: EdgeInsets.symmetric(
             horizontal: DesignSystem.spacingMD,
-            vertical: DesignSystem.spacingSM,
+            vertical: DesignSystem.spacingLG,
           ),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(DesignSystem.radiusXL),
+            borderRadius: BorderRadius.circular(DesignSystem.radiusFull),
           ),
           minimumSize: Size(isFullWidth ? double.infinity : 0, height),
         );
@@ -249,7 +246,7 @@ class FAButton extends StatelessWidget {
   Color _getBackgroundColor(BuildContext context) {
     switch (type) {
       case FAButtonType.primary:
-        return AppColors.primary;
+        return AppColors.buttonGradientEnd;
       case FAButtonType.secondary:
         return AppColors.secondary;
       case FAButtonType.outline:
@@ -267,17 +264,19 @@ class FAButton extends StatelessWidget {
         return AppColors.textOnPrimary;
       case FAButtonType.outline:
       case FAButtonType.text:
-        return AppColors.primary;
+        return AppColors.buttonGradientEnd;
     }
   }
 
   TextStyle _getTextStyle() {
     return AppTypography.button.copyWith(
       fontSize: size == FAButtonSize.small
-          ? 12
+          ? 16
           : size == FAButtonSize.medium
-              ? 14
-              : 16,
+              ? 16
+              : 18,
+      fontWeight: FontWeight.w600,
+      letterSpacing: 1,
     );
   }
 }

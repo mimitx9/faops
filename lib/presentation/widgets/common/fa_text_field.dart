@@ -108,9 +108,10 @@ class _FATextFieldState extends State<FATextField> {
             ? widget.suffixIcon
             : (widget.obscureText
                 ? IconButton(
+                  padding: EdgeInsets.symmetric(horizontal: DesignSystem.spacingLG),
                     icon: Icon(
                       _obscureText ? Icons.visibility : Icons.visibility_off,
-                      color: AppColors.iconSecondary,
+                      color: AppColors.textTertiary,
                       size: 20,
                     ),
                     onPressed: () {
@@ -121,8 +122,8 @@ class _FATextFieldState extends State<FATextField> {
                   )
                 : null),
         contentPadding: EdgeInsets.symmetric(
-          horizontal: DesignSystem.spacingMD,
-          vertical: DesignSystem.spacingMD,
+          horizontal: DesignSystem.spacingLG,
+          vertical: DesignSystem.spacingLG,
         ),
         filled: true,
         fillColor: widget.showBorder
@@ -155,7 +156,7 @@ class _FATextFieldState extends State<FATextField> {
           Material(
             color: Colors.white,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(DesignSystem.radiusXL),
+              borderRadius: BorderRadius.circular(DesignSystem.radiusFull),
               side: BorderSide(
                 color: widget.errorText != null
                     ? AppColors.error

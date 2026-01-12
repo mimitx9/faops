@@ -91,7 +91,7 @@ class AppTypography {
 
   // Body
   static const TextStyle bodyLarge = TextStyle(
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: FontWeight.w400,
     letterSpacing: 0.5,
     height: 1.5,

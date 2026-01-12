@@ -89,24 +89,23 @@ class _LoginPageState extends ConsumerState<LoginPage> {
               children: [
                 // Logo
                 Center(
-                  child: SvgPicture.asset(
-                    AssetHelper.svgLogo,
+                  child: Image.asset(
+                    AssetHelper.imageLogo,
                     width: 134,
                     height: 39,
                   ),
                 ),
-                SizedBox(height: DesignSystem.spacingXXL * 2),
+                SizedBox(height: DesignSystem.spacingXXL),
                 
                 // Phone Number Field
                 FATextField(
                   controller: _phoneController,
                   hint: AppStrings.phoneNumber,
                   prefixIcon: Padding(
-                    padding: const EdgeInsets.all(12.0),
+                    padding: const EdgeInsets.only(left: 28.0, right: 20.0),
                     child: SvgPicture.asset(
                       AssetHelper.svgUser,
-                      width: 20,
-                      height: 20,
+                      color: AppColors.textTertiary,
                     ),
                   ),
                   keyboardType: TextInputType.phone,
@@ -127,11 +126,10 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   controller: _passwordController,
                   hint: AppStrings.password,
                   prefixIcon: Padding(
-                    padding: const EdgeInsets.all(12.0),
+                    padding: const EdgeInsets.only(left: 28.0, right: 10.0),
                     child: SvgPicture.asset(
                       AssetHelper.svgPassword,
-                      width: 20,
-                      height: 20,
+                      color: AppColors.textTertiary,
                     ),
                   ),
                   obscureText: true, // Let FATextField handle visibility toggle
@@ -149,7 +147,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 // Login Button
                 FAButton(
                   text: authState.isLoading ? AppStrings.loading : AppStrings.login,
-                  type: FAButtonType.gradient,
+                  type: FAButtonType.primary,
                   onPressed: authState.isLoading ? null : _handleLogin,
                   isLoading: authState.isLoading,
                   isFullWidth: true,
