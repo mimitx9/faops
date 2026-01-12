@@ -378,7 +378,7 @@ class _TaskPageState extends ConsumerState<TaskPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const SizedBox(height: 24),
+        const SizedBox(height: DesignSystem.spacingMD),
         // Tháng hiện tại
         Center(
           child: Row(
@@ -399,7 +399,7 @@ class _TaskPageState extends ConsumerState<TaskPage> {
             ],
           ),
         ),
-        const SizedBox(height: 24),
+        const SizedBox(height: DesignSystem.spacingLG),
         // Calendar 7 ngày trong tuần
         Padding(
           padding: EdgeInsets.symmetric(horizontal: DesignSystem.spacingLG),
@@ -408,7 +408,7 @@ class _TaskPageState extends ConsumerState<TaskPage> {
             children: weekDays.map((day) => _buildDayItem(day)).toList(),
           ),
         ),
-        const SizedBox(height: 24),
+        const SizedBox(height: DesignSystem.spacingXXL),
         Expanded(
           child: _isManualLoading
               ? const Center(child: CircularProgressIndicator())
@@ -586,21 +586,6 @@ class _TaskPageState extends ConsumerState<TaskPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              margin: EdgeInsets.only(top: DesignSystem.spacingLG),
-              padding: EdgeInsets.all(DesignSystem.spacingLG),
-              decoration: BoxDecoration(
-                color: AppColors.taskEmpty,
-                borderRadius: BorderRadius.circular(24),
-              ),
-              child: Text(
-                'Chưa có nhiệm vụ ngày này',
-                style: AppTypography.bodyMedium.copyWith(
-                  color: AppColors.textSecondary,
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
             _buildAddTaskCard(),
           ],
         ),
@@ -823,7 +808,7 @@ class _TaskPageState extends ConsumerState<TaskPage> {
       child: Container(
         decoration: BoxDecoration(
           color: AppColors.surface,
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: BorderRadius.circular(DesignSystem.radiusXL),
           border: Border.all(
             color: AppColors.border,
             width: 1,
@@ -837,7 +822,7 @@ class _TaskPageState extends ConsumerState<TaskPage> {
                 '+ Thêm',
                 style: AppTypography.bodyLarge.copyWith(
                   color: AppColors.textSecondary,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w400,
                 ),
               ),
             ),
